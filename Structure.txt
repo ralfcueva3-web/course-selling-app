@@ -1,0 +1,49 @@
+Structure
+
+
+course-selling-app/
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   ├── middleware/
+│   │   ├── userAuth.js
+│   │   ├── adminAuth.js
+│   │   └── rateLimiter.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Admin.js
+│   │   ├── Course.js
+│   │   ├── Purchase.js
+│   │   └── ChatHistory.js
+│   ├── routes/
+│   │   ├── user.js
+│   │   ├── admin.js
+│   │   └── ai.js
+│   ├── controllers/
+│   │   ├── userController.js
+│   │   ├── adminController.js
+│   │   └── aiController.js
+│   ├── services/
+│   │   ├── anthropic.js
+│   │   ├── doubtSolver.js
+│   │   └── recommendations.js
+│   ├── .env
+│   ├── .gitignore
+│   ├── index.js
+│   └── package.json
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── ChatWidget.jsx
+    │   │   └── RecommendedCourses.jsx
+    │   ├── pages/
+    │   │   ├── Login.jsx
+    │   │   ├── Signup.jsx
+    │   │   ├── Courses.jsx
+    │   │   ├── CoursePage.jsx
+    │   │   └── Dashboard.jsx
+    │   ├── App.jsx
+    │   └── main.jsx
+    └── package.json
+```
+
