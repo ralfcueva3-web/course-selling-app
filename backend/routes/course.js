@@ -4,7 +4,7 @@ const { userModel, purchaseModel, courseModel } = require("../db");
 const courseRouter = Router()
 
 
-courseRouter.get('/purchase', userMiddleware, async (req, res) => {
+courseRouter.post('/purchase', userMiddleware, async (req, res) => {
 
     const userId = req.userId;
     const courseId = req.body.courseId;
@@ -19,7 +19,7 @@ courseRouter.get('/purchase', userMiddleware, async (req, res) => {
     })
 })
 
-courseRouter.get('/preview', (req, res) => {
+courseRouter.get('/preview', async (req, res) => {
 
     const courses = await courseModel.find({})
     res.json({

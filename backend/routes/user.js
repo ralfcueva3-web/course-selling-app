@@ -50,17 +50,19 @@ userRouter.post('/signin', async (req, res) => {
             msg : "incorrect credentials"
         })
     }
-    res.json({
-        message : "user signin endpoint"
-    })
+    
 })
 
-userRouter.get('/purchases', userMiddleware, (req, res) => {
+userRouter.get('/purchases', userMiddleware, async (req, res) => {
 
     const userId = req.userId;
 
     const purchases = await purchaseModel.find({
         userId
+    })
+
+    const coursesData = await courseModel.find({
+        _id: { $in: purchases.map(x => x.courseId)}
     })
     res.json({
         purchases
