@@ -1,6 +1,6 @@
 const { Router } = require ("express")
 const adminRouter = Router()
-const { adminModel } = require ("../db")
+const { adminModel, courseModel } = require ("../db")
 const jwt = require ("jsonwebtoken")
 const { JWT_ADMIN_PASSWORD } = require("../config")
 
@@ -48,9 +48,21 @@ adminRouter.post('/signin', async (req, res) => {
     })
 })
 
-adminRouter.post('/signin', (req, res) => {
+adminRouter.post('/course', adminMiddleware, async (req, res) => {
+    const adminId = req.userId
+
+    const {title, description, imageUrl, price} = req.body;
+
+    await courseModel.create({
+        title : title ,
+        description : description,
+        imageUrl : imageUrl,
+        price : price,
+        creatorId : adminId
+    })
     res.json({
-        message : "admin signin endpoint"
+        message : "course created ",
+        courseId : course._id
     })
 })
 
