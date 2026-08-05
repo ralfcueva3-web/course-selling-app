@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {Router} = require ("express");
 const { userModel } = require("../db");
 const jwt = require ("jsonwebtoken");

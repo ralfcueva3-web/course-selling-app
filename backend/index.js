@@ -13,7 +13,7 @@ app.use("/api/v1/course", courseRouter);
 app.use("/api/v1/admin", adminRouter);
 
 const main = async() => {
-    await mongoose.connect("mongodb+srv://ralf_432:QXrSPsjmwyLlthzL@cluster0.i4hpg8v.mongodb.net/Cohortly")
+    await mongoose.connect(process.env.MONGO_URL)
     app.listen(3000);
     console.log("listening on port 3000 ")
 }

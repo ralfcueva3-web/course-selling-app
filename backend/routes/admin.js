@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { Router } = require ("express")
 const adminRouter = Router()
 const { adminModel, courseModel } = require ("../db")
@@ -67,6 +68,7 @@ adminRouter.post('/course', adminMiddleware, async (req, res) => {
 })
 
 adminRouter.post('/', (req, res) => {
+    
     res.json({
         message : "admin signin endpoint"
     })
