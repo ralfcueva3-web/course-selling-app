@@ -1,15 +1,20 @@
 require('dotenv').config()
+console.log(process.env);
+console.log("JWT_ADMIN_PASSWORD:", process.env.JWT_ADMIN_PASSWORD);
+console.log("JWT_USER_PASSWORD:", process.env.JWT_USER_PASSWORD);
 const { Router } = require ("express")
 const adminRouter = Router()
 const { adminModel, courseModel } = require ("../db")
 const jwt = require ("jsonwebtoken")
 const { JWT_ADMIN_PASSWORD } = require("../config")
+console.log(JWT_ADMIN_PASSWORD)
+const { adminMiddleware } = require ("../middleware/admin")
 
 adminRouter.post('/signup', async (req, res) => {
     const { email, password, firstName, lastName } = req.body; //TODO : adding ZOD validation 
         // TODO : hash the password so plain text pw is not stored in the db ........... once you have hashed the password, call userModel user.js 
         // put it into try-catch
-        await adminModel.create({
+        const course = await adminModel.create({
             email : email,
             password : password,
             firstName : firstName,
@@ -44,9 +49,6 @@ adminRouter.post('/signin', async (req, res) => {
                 msg : "incorrect credentials"
             })
         }
-    res.json({
-        message : "admin signin endpoint"
-    })
 })
 
 adminRouter.post('/course', adminMiddleware, async (req, res) => {
@@ -54,7 +56,7 @@ adminRouter.post('/course', adminMiddleware, async (req, res) => {
 
     const {title, description, imageUrl, price} = req.body;
 
-    await courseModel.create({
+    const course = await courseModel.create({
         title : title ,
         description : description,
         imageUrl : imageUrl,
@@ -67,7 +69,7 @@ adminRouter.post('/course', adminMiddleware, async (req, res) => {
     })
 })
 
-adminRouter.put('/course', adminMiddleware, async (req, res) => {
+adminRouter.put('/', adminMiddleware, async (req, res) => {
     const adminId = req.userId
 
     const {title, description, imageUrl, price, courseId} = req.body;
@@ -85,7 +87,7 @@ adminRouter.put('/course', adminMiddleware, async (req, res) => {
     })
 })
 
-adminRouter.get('/bulk', adminMiddleware, (req, res) => {
+adminRouter.get('/course/bulk', adminMiddleware, async (req, res) => {
     const adminId = req.userId;
 
     const course = await courseModel.find({
