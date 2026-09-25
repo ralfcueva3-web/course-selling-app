@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const connectDB = require("./config/db");
 
-const userRoutes = require("./routes/user.js");
+const userRoutes = require("./routes/User.js");
 const adminRoutes = require("./routes/Admin");
 const aiRoutes = require("./routes/Ai");
 
