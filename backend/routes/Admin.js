@@ -1,29 +1,41 @@
-// const express = require ("express");
-// const router = express.Router();
-// const adminAuth = require ("../middleware/adminAuth");
-// const {signup, login, createCourse, deleteCourse} = require ("../controllers/adminController");
-
-// router.post("/signup", signup);
-// router.post("/login", login);
-// router.post("/course", adminAuth, createCourse);
-// router.put("/course/:courseId", (req, res) => res.json({msg: "ok"}));
-// router.delete("/course/:courseId", adminAuth, deleteCourse);
-// router.get("/courses", (req, res) => res.json({msg: "ok"}));
-
-// module.exports = router;
-
-// final change 
-
 const express = require("express");
+
 const router = express.Router();
+
 const adminAuth = require("../middleware/adminAuth");
-const { signup, login, createCourse, deleteCourse } = require("../controllers/adminController");
+
+const {
+    signup,
+    login,
+    logout,
+    getAdminProfile,
+    createCourse,
+    deleteCourse,
+    getCourses,
+    updateCourse
+} = require("../controllers/adminController");
+
+
+// -------- Authentication --------
 
 router.post("/signup", signup);
+
 router.post("/login", login);
+
+router.post("/logout", logout);
+
+router.get("/me", adminAuth, getAdminProfile);
+
+
+// -------- Course Management --------
+
 router.post("/course", adminAuth, createCourse);
-router.put("/course/:courseId", adminAuth, (req, res) => res.json({ msg: "ok" }));
+
+router.put("/course/:courseId", adminAuth, updateCourse);
+
 router.delete("/course/:courseId", adminAuth, deleteCourse);
-router.get("/courses", adminAuth, (req, res) => res.json({ msg: "ok" }));
+
+router.get("/courses", adminAuth, getCourses);
+
 
 module.exports = router;

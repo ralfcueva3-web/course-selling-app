@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+
 const connectDB = require("./config/db");
 
 const userRoutes = require("./routes/user.js");
@@ -15,35 +16,31 @@ const app = express();
 
 app.use(rateLimiter);
 
-connectDB();
-
-app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
+app.use(
+    cors({
+        origin: process.env.FRONTEND_URL || "http://localhost:5173",
+        credentials: true,
+    })
+);
 
 app.use(express.json());
+
 app.use(cookieParser());
+
+connectDB();
+
+app.get("/", (req, res) => {
+    res.json({
+        msg: "LearnFlow backend is running"
+    });
+});
 
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/ai", aiRoutes);
 
-app.listen(process.env.PORT || 3000, () =>
-    console.log("Server running on port 3000")
-);
+const PORT = process.env.PORT || 3000;
 
-
-//before 
-// const rateLimiter = require("./middleware/rateLimiter.js")
-// app.use(rateLimiter)       // ❌
-
-// const app = express();     // ❌ too late
-
-// after fixing 
-
-// const rateLimiter = require("./middleware/rateLimiter.js");
-
-// const app = express();     // ✅ create app first
-
-// app.use(rateLimiter);      // ✅ then use middleware
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+});
